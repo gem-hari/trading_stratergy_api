@@ -19,7 +19,7 @@ nifty_50_stocks = [
     "ULTRACEMCO.NS", "UPL.NS", "WIPRO.NS"
 ]
 
-lot_sizes = [
+lot_sizes_const = [
     1250, 300, 1200, 250, 125, 125, 1851, 1800, 200, 650,
     3200, 200, 250, 350, 950, 600, 300, 500, 1050, 300,
     1075, 300, 700, 900, 300, 950, 1350, 600, 375, 475,
@@ -48,8 +48,12 @@ def preprocess_data_sell_only(data):
     return data
 
 # Main function to create the strategy for sell transactions
-def create_trading_strategy_sell_only(training_period, testing_period,stocks = nifty_50_stocks, lot_sizes = lot_sizes):
+def create_trading_strategy_sell_only(training_period, testing_period,stocks = None, lot_sizes = None):
     results = []
+    if stocks is None:
+        stocks = nifty_50_stocks
+    if lot_sizes is None:
+        lot_sizes = lot_sizes_const
 
     for stock, lot_size in zip(stocks, lot_sizes):
         print(f"Processing {stock}...")

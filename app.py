@@ -21,6 +21,9 @@ def calculate_risk_endpoint():
         training_period = data.get("training_period", None)
         testing_period = data.get("testing_period", None)
 
+        stocks = data.get("stocks", None)
+        lot_sizes = data.get("lot_sizes",None)
+
         if training_period is None:
             return jsonify({"error": "Missing field training_period"}), 400
 
@@ -45,7 +48,7 @@ def calculate_risk_endpoint():
         if testing_start > testing_end:
             return jsonify({"error": "Testing end date should be greater than start date"})
 
-        result_excel = create_trading_strategy_sell_only(training_period, testing_period)
+        result_excel = create_trading_strategy_sell_only(training_period, testing_period, stocks, lot_sizes)
         
         output = io.BytesIO()
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
